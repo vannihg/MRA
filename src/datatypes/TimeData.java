@@ -2,25 +2,25 @@ package datatypes;
 
 
 public class TimeData {
-	private String day;
-	private String month;
-	private String year;
+	private int day;
+	private int month;
+	private int year;
 
-	public TimeData(String year, String month, String day) {
+	public TimeData(int year, int month, int day) {
 		this.day = day;
 		this.month = month;
 		this.year = year;
 	}
 
-	public String getDay() {
+	public int getDay() {
 		return day;
 	}
 
-	public String getMonth() {
+	public int getMonth() {
 		return month;
 	}
 	
-	public String getYear()  {
+	public int getYear()  {
 		return year;
 	}
 }
