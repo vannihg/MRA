@@ -8,7 +8,7 @@ public interface IMovieDatabase {
 	public boolean check_rate(int rating, int uid, int mid, String comment);
 	
 	public boolean addMovie(String title, String director, String actors, TimeData publishingDate);
-	public boolean checkMovie(String title, TimeData publishingDate);
+	public boolean checkMovie(String title, String director, String actors, TimeData publishingDate);
 	
 	
 }
