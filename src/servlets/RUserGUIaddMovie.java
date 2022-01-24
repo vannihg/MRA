@@ -7,75 +7,71 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import application.MRA_App;
+import application.MRAApplication;
 import datatypes.TimeData;
 
-
-public class RUserGUIaddMovie extends HttpServlet {
-	
+public class RUserGUI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	
-	
-	
-	
-	 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-		 
-		request.setAttribute("navtype", "registered user");
-		request.setAttribute("pagetitle", "Add Movie");
-
-		// Dispatch request to template engine
+		
+		request.setAttribute("navtype", "registereduser");
+		request.setAttribute("pagetitle", "addmovie");
+		
 		try {
-			request.getRequestDispatcher("/templates/defaultWebpageRUser.ftl").forward(request, response);
-		} catch (ServletException | IOException e) {
+			request.getRequestDispatcher("/templates/defaultWebpageRU.ftl").forward(request, response);
+			
+		}
+		catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-	
+		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		
+		request.setAttribute("navtype", "registereduser");
 
-		request.setAttribute("navtype", "registered user");
-
-		// Check whether the call is insertOffer or not
-		if (request.getParameter("action").equals("Add Movie")) {
-
-			// Append parameter of request
-			String title = (String) request.getParameter("title");
-			String director = (String) request.getParameter("director");
-			String actors =(String) request.getParameter("actors");
-			TimeData publishingDate = (String) request.getParameter("publishingDate");
-			
-		  
-			if(new MRA_App().forwardAddNewMovie(title, director, actors, publishingDate)==true) {
- 
-		   try {
-	 		    request.setAttribute("pagetitle", "Add Movie");
-			    request.setAttribute("message", "Add success");
-				request.getRequestDispatcher("/templates/okRepresentation.ftl").forward(request, response);
-
-			} catch (ServletException | IOException e) {
-				e.printStackTrace();
-			}}
-			
-			if(new MRA_App().forwardAddNewMovie(title, director, actors, publishingDate)==false) {
-				 
-				   try {
-			 		    request.setAttribute("pagetitle", "add");
-					    request.setAttribute("message", "AddMovie failed");
-						request.getRequestDispatcher("/templates/failInfoRepresentation.ftl").forward(request, response);
-
-					} catch (ServletException | IOException e) {
-						e.printStackTrace();
-					}}
-			
-					
-			
-		} else
-			doGet(request, response);
-
-	}
-}
 	
+	if (request.getParameter("action").equals("addmovie")) {
+		String title = (String) request.getParameter("title");
+		String director = (String) request.getParameter("director");
+		String actors = (String) request.getParameter("actors");
+		String daystr = (String) request.getParameter("day");
+		int day = Integer.parseInt(daystr);
+		String monthstr = (String) request.getParameter("month");
+		int month = Integer.parseInt(monthstr);
+		String yearstr = (String) request.getParameter("year");
+		int year = Integer.parseInt(yearstr);
+		String midstr = (String) request.getParameter("mid");
+		int mid =Integer.parseInt(midstr);
+		
+		if (new MRAApplication().forwardAddNewMovie(title, director, actors, new TimeData(day, month,year), mid) == true) {
+			try {
+				request.setAttribute("pagetitle", "addmovie");
+			    request.setAttribute("message", "Add Movie OK");
+				request.getRequestDispatcher("/templates/okRepresentation.ftl").forward(request, response);
+			}
+			catch (ServletException | IOException e) {
+				e.printStackTrace();
+				
+			}
+		}
+		
+		if (new MRAApplication().forwardAddNewMovie(title, director, actors, new TimeData(day, month,year), mid) == false) {
+			try {
+				request.setAttribute("pagetitle", "addmovie");
+			    request.setAttribute("message", "Add Movie Failed");
+				request.getRequestDispatcher("/templates/failInfoRepresentation.ftl").forward(request, response);
+			}
+			catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+				
+			}
+	
+} else {
+	doGet(request, response);
+}
+}
+}
 	
