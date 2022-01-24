@@ -58,21 +58,19 @@ public class MRA_App implements RUCmds, UCmds{
 	}
 
 	@Override
-	public boolean forwardAddNewMovie(String title, String director, String actors, TimeData publishingDate)  {
-
-			boolean okfail = false;
-
-			// Parse inputs to correct datatypes
-			try {
-				String titleSQL = title;
-	      String directorSQL = director;
-	      String actorsSQL = actors;
-				okfail = MD_Adapter.getInstance().addMovie(titleSQL, directorSQL, actorsSQL, publishingDate);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return okfail;
+	public boolean forwardAddNewMovie(String title, String director, String actors, TimeData publishingDate, int mid) {
+		String titleSQL = title;
+		String directorSQL = director;
+		String actorsSQL = actors;
+		int midSQL = mid;
+		
+		if (MD_Adapter.getInstance().addMovie(titleSQL, directorSQL, actorsSQL, publishingDate, midSQL)) {
+			return true;
+		} else {
+			return false;
 		}
+			
+	}
 
 	@Override
 	public List<Movie> getMovies() {
