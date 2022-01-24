@@ -19,7 +19,7 @@ public class RUserGUI extends HttpServlet {
 		request.setAttribute("pagetitle", "addmovie");
 		
 		try {
-			request.getRequestDispatcher("/templates/defaultWebpageRU.ftl").forward(request, response);
+			request.getRequestDispatcher("/templates/defaultWebpageRUser.ftl").forward(request, response);
 			
 		}
 		catch (ServletException | IOException e) {
